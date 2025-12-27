@@ -1,0 +1,42 @@
+.ham-menu-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers image and menu horizontally */
+    position: relative; /* keeps the menu positioned relative to this container */
+}
+
+.ham-menu {
+    overflow: hidden;
+    max-height: 0px;
+    transition: max-height 0.25s ease;
+    position: absolute;
+    background-color: white;
+    top: 100%;
+    z-index: 15;
+}
+
+.ham-menu.open {
+    max-height: 300px;
+}
+
+#burgerImg:hover{
+    cursor: pointer;
+}
+.ham-ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+}
+
+.ham-ul li {
+    margin: 10px 0; /* spacing between buttons */
+}
+
+.link-btn {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    background: none;
+    font-size: 16px;
+}

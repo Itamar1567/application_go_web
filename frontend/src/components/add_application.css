@@ -1,0 +1,58 @@
+.clean-app-main {
+  border: 1px solid black;
+  box-shadow: 1px;
+  padding: 1rem 2rem;
+  flex-direction: column;
+  display: flex;
+}
+
+.clean-app-main-required-ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0%;
+}
+
+.clean-app-main-required-ul li {
+  padding-right: 2rem;
+}
+
+.bottom-ul{
+    list-style: none;
+    padding: 0%;
+}
+.submission-btn {
+  border-radius: 9px;
+  padding: 1rem 2rem;
+  transition: width 0.25s ease;
+}
+
+.submission-btn:hover {
+  cursor: pointer;
+  width: 115%;
+}
+
+.add-application-btn {
+  border-radius: 9px;
+  padding: 1rem 2rem;
+}
+.add-application-btn:hover {
+  cursor: pointer;
+  background-color: beige;
+}
+
+.solid {
+  width: 100%;
+  border-top: 3px solid #bbb;
+}
+
+input{
+    width: 100%;
+}
+p {
+  font-size: larger;
+  align-items: center;
+  display: flex;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
