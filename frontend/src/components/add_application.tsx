@@ -73,6 +73,15 @@ function AddApplication() {
 
   //end "enums"
 
+  const normalizeSalary = (value: string | number | undefined | null) => {
+  if (value === undefined || value === null || value === "") {
+    return undefined; // send NULL to the database
+  }
+
+  const num = Number(value);
+  return isNaN(num) ? undefined : num;
+};
+
   //tech debt ):
   const validateApplicationSubmission = (): ToCreateApplication | null => {
     if (!application.companyName.trim() || !application.role.trim()) {
@@ -88,8 +97,10 @@ function AddApplication() {
         setReqInputFieldErr((prev) => ({ ...prev, role: false }));
       }
 
-      return null;
     }
+
+    //Make salary valid if empty
+    application.salary = normalizeSalary(application.salary);
 
     setReqInputFieldErr((prev) => ({ ...prev, companyName: false }));
     setReqInputFieldErr((prev) => ({ ...prev, role: false }));
@@ -114,6 +125,7 @@ function AddApplication() {
     setApplication(defaultValuesForApplication);
     window.scrollTo(0, 0);
   };
+
 
   return (
     <div className="clean-app-main">
@@ -204,6 +216,9 @@ function AddApplication() {
         <li>
           <p>Date Applied: </p>
           <input
+            type="date"
+            min="1900-01-01"
+            max="3000-01-01"
             value={application.dateApplied ?? ""}
             name="dateApplied"
             placeholder="Ex: Year-Month-Day"
@@ -214,6 +229,7 @@ function AddApplication() {
           <p>Salary: </p>
           <input
             value={application.salary ?? ""}
+            type="number"
             name="salary"
             placeholder="Ex: 75000"
             onChange={handleChange}
@@ -222,6 +238,7 @@ function AddApplication() {
         <li>
           <p>Posting Url: </p>
           <input
+            type="url"
             value={application.companyUrl ?? ""}
             name="companyUrl"
             placeholder="Ex: https://www.example.com"
