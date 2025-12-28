@@ -8,14 +8,39 @@ function Home() {
   const [applicationsData, setApplicationsData] = useState<ToGetApplication[]>(
     []
   );
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  //Search functionality
+
+  const [searchItem, setSearchItem] = useState("");
+
+  const [filteredData, setFilteredData] =
+    useState<ToGetApplication[]>(applicationsData);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let searchTerm: string = e.target.value;
+    if (!searchTerm.trim()) {
+      setSearchItem(searchTerm);
+      setFilteredData(applicationsData);
+      return;
+    }
+    setSearchItem(searchTerm);
+    const filteredItems = applicationsData.filter((application) =>
+      application.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredData(filteredItems);
+  };
+
+  // End Search functionality
 
   useEffect(() => {
     const loadApplications = async () => {
       try {
         const data = await fetchUserApplications();
         setApplicationsData(data);
+        setFilteredData(data);
       } catch (err) {
         setError("Failed to load applications");
       } finally {
@@ -27,10 +52,10 @@ function Home() {
   }, []);
 
   const handleDeleteApplication = (id: number) => {
-
-    setApplicationsData((prev) => prev.filter(application => application.id !== id));
-
-  }
+    setApplicationsData((prev) =>
+      prev.filter((application) => application.id !== id)
+    );
+  };
 
   return (
     <div>
@@ -38,13 +63,23 @@ function Home() {
       <div className="content">
         <div className="title-section">
           <h1>Your Applications</h1>
-          <input placeholder="search by company name"></input>
+          <input
+            type="text"
+            value={searchItem}
+            onChange={handleInputChange}
+            placeholder="search by company name"
+          ></input>
         </div>
 
         <div className="applications-section">
-            {applicationsData.map((application) => (
-              <ApplicationModule key={application.id} {...application} onDelete={handleDeleteApplication} details={application}/>
-            ))}
+          {filteredData.map((application) => (
+            <ApplicationModule
+              key={application.id}
+              {...application}
+              onDelete={handleDeleteApplication}
+              details={application}
+            />
+          ))}
         </div>
       </div>
     </div>

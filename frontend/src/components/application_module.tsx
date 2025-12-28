@@ -67,10 +67,10 @@ function ApplicationModule({details, onDelete}: props) {
     <div className="main">
       <ul className="top-ul">
         <li>
-          <h3>Company Name: {details.companyName}</h3>
+          <h3>Company: {details.companyName}</h3>
         </li>
         <li>
-          <h3>Date Applied: {details.dateApplied}</h3>
+          <h3>Applied: {details.dateApplied}</h3>
         </li>
       </ul>
       <ul className="details-ul text-styling">

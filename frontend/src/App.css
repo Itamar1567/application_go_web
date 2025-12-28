@@ -1,3 +1,7 @@
 body{
   padding: 0 2rem;
 }
+
+input{
+  border-radius: 5px;
+}
