@@ -13,7 +13,7 @@ export interface ToCreateApplication {
 }
 
 // Sent when updating
-export interface ToUpdateApplicationDTO {
+export interface ToUpdateApplication {
   companyName?: string;
   status?: number;
   type?: number;

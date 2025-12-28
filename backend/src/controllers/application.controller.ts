@@ -1,6 +1,7 @@
 import type { Response, Request } from "express";
 import {
   addApplicationByUserId,
+  changeApplicationByUserId,
   removeApplicationByUserId,
   retrieveAllApplicationsByUserId,
 } from "../services/applicaiton.service";
@@ -50,11 +51,10 @@ export const deleteApplicationByUserId = async (
   res: Response
 ) => {
   try {
-
     const userId = req.query.userId as string;
     const id = Number(req.params.id);
 
-    console.log(userId) // comes back as number;
+    console.log(userId); // comes back as number;
 
     if (Number.isNaN(id)) {
       return res.status(400).json({ error: "Invalid id" });
@@ -64,9 +64,29 @@ export const deleteApplicationByUserId = async (
     }
 
     const result = await removeApplicationByUserId(userId, id);
-    return res.json({success: true, result});
+    return res.json({ success: true, result });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Could not delete application" });
   }
+};
+
+export const updateApplicationByUserId = async (
+  req: Request,
+  res: Response
+) => {
+  const userId = req.query.userId as string;
+  const id = Number(req.params.id);
+
+  console.log(userId); // comes back as number;
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({ error: "Invalid id" });
+  }
+  if (!userId) {
+    return res.status(400).json({ message: "userId is required" });
+  }
+
+  const result = await changeApplicationByUserId(userId, id, req.body);
+  return res.json({success: true , result});
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./add_application.css";
 import type { ToCreateApplication } from "../interfaces/ToDoApplication";
 import RequiredField from "./required_field";
@@ -19,7 +19,6 @@ function AddApplication() {
   });
 
   const defaultValuesForApplication: ToCreateApplication = {
-
     companyName: "",
     role: "",
     status: 0,
@@ -30,8 +29,7 @@ function AddApplication() {
     state: undefined,
     salary: undefined,
     companyUrl: undefined,
-
-  }
+  };
 
   type ReqInputFields = "companyName" | "role";
 
@@ -112,9 +110,10 @@ function AddApplication() {
     }
   };
 
-  const resetInputsOnApplicationCreation = () =>{
+  const resetInputsOnApplicationCreation = () => {
     setApplication(defaultValuesForApplication);
-  }
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div className="clean-app-main">
