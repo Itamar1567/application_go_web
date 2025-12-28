@@ -2,9 +2,9 @@ import "./application_module.css";
 import downArrow from "../assets/down-arrow.png";
 import closeImg from "../assets/close_details.png";
 import { useState } from "react";
-import type { ToGetApplication } from "../interfaces/ToDoApplication";
+import type { ToGetApplication, ToUpdateApplication } from "../interfaces/ToDoApplication";
 import StatusButton from "./status_button";
-import { deleteUserApplication } from "../services/applicationService";
+import { deleteUserApplication, updateUserApplication } from "../services/applicationService";
 
 interface props {
   onDelete: (id: number) => void;
@@ -22,6 +22,8 @@ function ApplicationModule({details, onDelete}: props) {
   const type: string[] = ["Full-Time", "Part-Time", "Internship", "Contract"];
   const location: string[] = ["OnSite", "Hybrid", "Remote"];
 
+  const [updatedApplicationDetails, setUpdatedApplicationDetails] = useState<ToUpdateApplication>(details);
+
   //Status section
 
   const [currStatIndex, setCurrStatIndex] = useState(details.status);
@@ -29,7 +31,10 @@ function ApplicationModule({details, onDelete}: props) {
   const [isPressDelete, setIsPressDelete] = useState(false);
 
   function changeStatusIndex() {
-    setCurrStatIndex((prev) => (prev + 1) % statusType.length);
+    let newStatus = (currStatIndex + 1) % statusType.length;
+    setCurrStatIndex(newStatus);
+    setUpdatedApplicationDetails((prev) => ({...prev, ["status"]: newStatus}))
+    
   }
 
   //End section
@@ -47,6 +52,16 @@ function ApplicationModule({details, onDelete}: props) {
       onDelete(details.id);
     }
   };
+
+  const handleChangeApplication = async() =>{
+    try{
+      const res = await updateUserApplication(details.id, updatedApplicationDetails);
+      return res;
+
+    }catch(err){
+      console.log(err, "Failed to update application");
+    }
+  }
 
   return (
     <div className="main">
@@ -106,7 +121,7 @@ function ApplicationModule({details, onDelete}: props) {
         click={changeStatusIndex}
       ></StatusButton>
       <div className="edit-buttons-container">
-        <button>Save Changes</button>
+        <button onClick={handleChangeApplication}>Save Changes</button>
         <button
           onClick={() => deleteApplication()}
           style={
