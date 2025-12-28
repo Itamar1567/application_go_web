@@ -18,6 +18,21 @@ function AddApplication() {
     type: 0,
   });
 
+  const defaultValuesForApplication: ToCreateApplication = {
+
+    companyName: "",
+    role: "",
+    status: 0,
+    location: 0,
+    type: 0,
+    dateApplied: undefined,
+    country: undefined,
+    state: undefined,
+    salary: undefined,
+    companyUrl: undefined,
+
+  }
+
   type ReqInputFields = "companyName" | "role";
 
   const [reqInputFieldErr, setReqInputFieldErr] = useState<
@@ -92,10 +107,14 @@ function AddApplication() {
       if (!data) {
         return;
       } else {
-        console.log("Sent");
+        resetInputsOnApplicationCreation();
       }
     }
   };
+
+  const resetInputsOnApplicationCreation = () =>{
+    setApplication(defaultValuesForApplication);
+  }
 
   return (
     <div className="clean-app-main">
