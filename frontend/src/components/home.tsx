@@ -14,7 +14,6 @@ function Home() {
   );
 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   //Search functionality
 
@@ -45,8 +44,8 @@ function Home() {
         const data = await fetchUserApplications();
         setApplicationsData(data);
         setFilteredData(data);
-      } catch (err) {
-        setError("Failed to load applications");
+      } catch (err: any) {
+        alert(err.message)
       } finally {
         setLoading(false);
       }

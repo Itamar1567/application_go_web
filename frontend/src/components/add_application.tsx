@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./add_application.css";
 import type { ToCreateApplication } from "../interfaces/ToDoApplication";
 import RequiredField from "./required_field";
@@ -42,7 +42,7 @@ function AddApplication() {
     role: false,
   });
 
-  //"Enums and related functions"
+  //"Enums (Inorder to cycle buttons with a specifc Index, value(s) pair)and related functions"
 
   const statusEnum = [
     { text: "Applied", color: "#47f559" },
@@ -84,41 +84,37 @@ function AddApplication() {
   return isNaN(num) ? undefined : num;
 };
 
-  //tech debt ):
+  //Thie function Validates that all required input is provided
   const validateApplicationSubmission = (): ToCreateApplication | null => {
-    if (!application.companyName.trim() || !application.role.trim()) {
-      if (!application.companyName.trim()) {
-        setReqInputFieldErr((prev) => ({ ...prev, companyName: true }));
-      } else {
-        setReqInputFieldErr((prev) => ({ ...prev, companyName: false }));
-      }
 
-      if (!application.role.trim()) {
-        setReqInputFieldErr((prev) => ({ ...prev, role: true }));
-      } else {
-        setReqInputFieldErr((prev) => ({ ...prev, role: false }));
-      }
+    //Use a map("Record") to dynamically change validity of required inputs
 
-    }
+    const errors: Record<ReqInputFields, boolean> = {
+    companyName: !application.companyName.trim(),
+    role: !application.role.trim(),};
 
-    //Make salary valid if empty
-    application.salary = normalizeSalary(application.salary);
+    setReqInputFieldErr(errors);
 
-    setReqInputFieldErr((prev) => ({ ...prev, companyName: false }));
-    setReqInputFieldErr((prev) => ({ ...prev, role: false }));
-    return application;
+    const isError = Object.values(errors).some((v) => v);
+    if(isError) { return null; }
+
+    //Make salary valid if empty (may change this handler later) 
+    const cleanApplication: ToCreateApplication = { ...application, salary: normalizeSalary(application.salary) }
+
+    return cleanApplication;
   };
 
   const createApplication = async () => {
-    const valid = validateApplicationSubmission();
-    if (!valid) {
+    const validApplication = validateApplicationSubmission();
+    if (!validApplication) {
       return;
     } else {
-      const data = await sendNewUserApplication(application);
-      if (!data) {
-        return;
-      } else {
-        resetInputsOnApplicationCreation();
+      try{
+        const data = await sendNewUserApplication(validApplication);
+        resetInputsOnApplicationCreation(); 
+        alert(data.message);
+      }catch(err: any){
+        alert(err.message);
       }
     }
   };
@@ -136,7 +132,7 @@ function AddApplication() {
       <ul className="clean-app-main-required-ul">
         <li>
           {reqInputFieldErr.companyName && (
-            <RequiredField text="You must a company name" />
+            <RequiredField text="You must provide a company name" />
           )}
           <p>*Company Name: </p>
           <input

@@ -46,23 +46,28 @@ function ApplicationModule({details, onDelete}: props) {
 
   let extraDetailsImg = isExtraDetails ? closeImg : downArrow;
 
-  const deleteApplication = () => {
+  const deleteApplication = async() => {
     if (!isPressDelete) {
       setIsPressDelete(true);
       return;
     } else {
-      deleteUserApplication(details.id);
+      try{
+        const res = await deleteUserApplication(details.id);
+      alert(res.message)
       onDelete(details.id);
+      }catch(err: any){
+        alert(err.message);
+      }
+      
     }
   };
 
   const handleChangeApplication = async() =>{
     try{
       const res = await updateUserApplication(details.id, updatedApplicationDetails);
-      return res;
-
-    }catch(err){
-      console.log(err, "Failed to update application");
+      alert(res.message);
+    }catch(err: any){
+      alert(err.message)
     }
   }
 

@@ -10,9 +10,6 @@ export const fetchUserApplications = async (
   token: string | null
 ): Promise<ToGetApplication[]> => {
   try {
-    if (token === null) {
-      throw new Error("Invalid token");
-    }
     const res = await fetch(applicationsUrl, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -20,14 +17,13 @@ export const fetchUserApplications = async (
     });
 
     if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(errorText);
+      const error = await res.json();
+      throw new Error(error);
     }
 
     console.log("Succesfully fetched applications: ");
     return res.json() as Promise<ToGetApplication[]>;
   } catch (err) {
-    console.log(err, "Failed to fetch applications");
     throw err;
   }
 };
@@ -35,11 +31,8 @@ export const fetchUserApplications = async (
 export const sendNewUserApplication = async (
   token: string,
   application: ToCreateApplication
-): Promise<boolean> => {
+) => {
   try {
-    if (token === null) {
-      throw new Error("Invalid token");
-    }
     const res = await fetch(applicationsUrl, {
       method: "POST",
       body: JSON.stringify(application),
@@ -54,22 +47,14 @@ export const sendNewUserApplication = async (
       throw new Error(errorText);
     }
 
-    console.log(res);
-    return true;
+    return res.json();
   } catch (err) {
-    console.log(err, "Failed to send application");
     throw err;
   }
 };
 
-export const deleteUserApplication = async (
-  token: string,
-  id: number
-): Promise<boolean> => {
+export const deleteUserApplication = async (token: string, id: number) => {
   try {
-    if (token === null) {
-      throw new Error("Invalid token");
-    }
     const res = await fetch(`${applicationsUrl}/${id}`, {
       method: "DELETE",
       headers: {
@@ -78,14 +63,12 @@ export const deleteUserApplication = async (
       },
     });
     if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(errorText);
+      const error = await res.json();
+      throw new Error(error);
     }
 
-    console.log(res);
-    return true;
+    return res.json();
   } catch (err) {
-    console.log(err, "Failed to delete application");
     throw err;
   }
 };
@@ -94,11 +77,8 @@ export const updateUserApplication = async (
   token: string,
   id: number,
   updateApp: ToUpdateApplication
-): Promise<boolean> => {
+) => {
   try {
-    if (token === null) {
-      throw new Error("Invalid token");
-    }
     const res = await fetch(`${applicationsUrl}/${id}`, {
       method: "PATCH",
       body: JSON.stringify(updateApp),
@@ -109,13 +89,12 @@ export const updateUserApplication = async (
     });
 
     if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(errorText);
+      const error = await res.json();
+      throw new Error(error);
     }
 
-    return true;
+    return res.json();
   } catch (err) {
-    console.log(err, "Failed to update application");
     throw err;
   }
 };

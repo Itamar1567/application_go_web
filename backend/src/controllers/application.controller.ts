@@ -12,15 +12,11 @@ export const createApplicationByUserId = async (
   res: Response
 ) => {
   try {
-
     const { userId } = getAuth(req);
 
-    if (!userId) {
-      return res.status(400).json({ message: "userId is required" });
-    }
-
     const result = await addApplicationByUserId(userId, req.body);
-    res.json(result);
+
+    return res.json({success: true, result, message: "Application Added To Cataloge"});
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Unable to add application" });
@@ -32,12 +28,7 @@ export const getAllApplicationsByUserId = async (
   res: Response
 ) => {
   try {
-
     const { userId } = getAuth(req);
-
-    if (!userId) {
-      return res.status(400).json({ message: "userId is required" });
-    }
 
     const applications = await retrieveAllApplicationsByUserId(userId);
     return res.json(applications);
@@ -54,20 +45,15 @@ export const deleteApplicationByUserId = async (
   res: Response
 ) => {
   try {
-    
     const { userId } = getAuth(req);
-    
+
     const id = Number(req.params.id);
 
     if (Number.isNaN(id)) {
       return res.status(400).json({ error: "Invalid id" });
     }
-    if (!userId) {
-      return res.status(400).json({ message: "userId is required" });
-    }
-
     const result = await removeApplicationByUserId(userId, id);
-    return res.json({ success: true, result });
+    return res.json({ success: true, result, message: "Application succesfully deleted"});
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Could not delete application" });
@@ -81,15 +67,10 @@ export const updateApplicationByUserId = async (
   const { userId } = getAuth(req);
   const id = Number(req.params.id);
 
-  console.log(userId); // comes back as number;
-
   if (Number.isNaN(id)) {
     return res.status(400).json({ error: "Invalid id" });
   }
-  if (!userId) {
-    return res.status(400).json({ message: "userId is required" });
-  }
 
   const result = await changeApplicationByUserId(userId, id, req.body);
-  return res.json({success: true , result});
+  return res.json({ success: true, result, message: "Application Updated" });
 };
