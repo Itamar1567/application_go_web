@@ -3,14 +3,14 @@ import "./hamburger_menu.css";
 import close from "../assets/close.png"
 import burgerImg from "../assets/burger-bar.png";
 import { Link } from "react-router-dom";
-
+import { UserButton } from "@clerk/clerk-react";
 
 
 function HamburgerMenu() {
  
   const [isActive, setIsActive] = useState(false);
 
-
+  
   
 
   let currBurgerImg = isActive ? close : burgerImg;
@@ -26,9 +26,10 @@ function HamburgerMenu() {
             <button className="link-btn"><Link to={'/addapplication'}>Add Application</Link></button>
           </li>
           <li>
-            <button className="link-btn">Products</button>
+             <button className="link-btn"><UserButton showName={true}></UserButton></button>
           </li>
         </ul>
+        
       </div>
       
     </div>

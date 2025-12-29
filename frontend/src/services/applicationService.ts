@@ -6,9 +6,17 @@ import type {
 
 const applicationsUrl: string = "http://localhost:3000/api/applications";
 
-export const fetchUserApplications = async (): Promise<ToGetApplication[]> => {
+export const fetchUserApplications = async (token: string | null): Promise<ToGetApplication[]> => {
   try {
-    const res = await fetch(applicationsUrl + "?userId=testuser_1");
+
+    if(token === null){
+      throw new Error("Invalid token");
+    }
+    const res = await fetch(applicationsUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!res.ok) {
       const errorText = await res.text();

@@ -1,10 +1,14 @@
 import ApplicationModule from "./application_module";
 import "./home.css";
 import type { ToGetApplication } from "../interfaces/ToDoApplication";
-import { fetchUserApplications } from "../services/applicationService";
+import { useApplicationService } from "../hooks/useApplicationService";
 import { useEffect, useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
 
 function Home() {
+
+  const { fetchUserApplications } = useApplicationService();
+  
   const [applicationsData, setApplicationsData] = useState<ToGetApplication[]>(
     []
   );
