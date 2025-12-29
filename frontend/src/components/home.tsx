@@ -3,17 +3,14 @@ import "./home.css";
 import type { ToGetApplication } from "../interfaces/ToDoApplication";
 import { useApplicationService } from "../hooks/useApplicationService";
 import { useEffect, useState } from "react";
-import { useAuth } from "@clerk/clerk-react";
 
 function Home() {
-
+  
   const { fetchUserApplications } = useApplicationService();
 
   const [applicationsData, setApplicationsData] = useState<ToGetApplication[]>(
     []
   );
-
-  const [loading, setLoading] = useState(true);
 
   //Search functionality
 
@@ -45,9 +42,7 @@ function Home() {
         setApplicationsData(data);
         setFilteredData(data);
       } catch (err: any) {
-        alert(err.message)
-      } finally {
-        setLoading(false);
+        alert(err.message);
       }
     };
 

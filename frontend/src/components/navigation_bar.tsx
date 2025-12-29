@@ -1,6 +1,5 @@
 import "./navigation_bar.css";
 import HamburgerMenu from "./hamburger_menu";
-import { Link } from "react-router-dom";
 
 function NavigationBar() {
   return (
