@@ -4,7 +4,7 @@ import closeImg from "../assets/close_details.png";
 import { useState } from "react";
 import type { ToGetApplication, ToUpdateApplication } from "../interfaces/ToDoApplication";
 import StatusButton from "./status_button";
-import { deleteUserApplication, updateUserApplication } from "../services/applicationService";
+import { useApplicationService } from "../hooks/useApplicationService";
 
 interface props {
   onDelete: (id: number) => void;
@@ -12,6 +12,9 @@ interface props {
 }
 
 function ApplicationModule({details, onDelete}: props) {
+
+  const { updateUserApplication, deleteUserApplication } = useApplicationService();
+
   const statusType = [
     { text: "Applied", color: "#47f559" },
     { text: "Interviewed", color: "#ecff3d" },

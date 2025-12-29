@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import "./add_application.css";
 import type { ToCreateApplication } from "../interfaces/ToDoApplication";
 import RequiredField from "./required_field";
-import { sendNewUserApplication } from "../services/applicationService";
+import { useApplicationService } from "../hooks/useApplicationService";
 
 function AddApplication() {
+
+  const { sendNewUserApplication } = useApplicationService();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setApplication((prev) => ({ ...prev, [name]: value }));

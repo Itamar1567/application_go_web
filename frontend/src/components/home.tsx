@@ -8,7 +8,7 @@ import { useAuth } from "@clerk/clerk-react";
 function Home() {
 
   const { fetchUserApplications } = useApplicationService();
-  
+
   const [applicationsData, setApplicationsData] = useState<ToGetApplication[]>(
     []
   );
@@ -57,6 +57,9 @@ function Home() {
 
   const handleDeleteApplication = (id: number) => {
     setApplicationsData((prev) =>
+      prev.filter((application) => application.id !== id)
+    );
+    setFilteredData((prev) =>
       prev.filter((application) => application.id !== id)
     );
   };

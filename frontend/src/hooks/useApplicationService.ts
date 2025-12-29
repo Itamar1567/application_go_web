@@ -3,8 +3,10 @@ import { useAuth } from "@clerk/clerk-react";
 import {
   fetchUserApplications as _fetchUserApplications,
   sendNewUserApplication as _sendNewUserApplication,
+  deleteUserApplication as _deleteUserApplication,
+  updateUserApplication as _updateUserApplication,
 } from "../services/applicationService";
-import type { ToCreateApplication } from "../interfaces/ToDoApplication";
+import type { ToCreateApplication, ToUpdateApplication } from "../interfaces/ToDoApplication";
 
 export function useApplicationService() {
   const { getToken } = useAuth();
@@ -18,11 +20,25 @@ export function useApplicationService() {
   const sendNewUserApplication = async (app: ToCreateApplication) => {
     const token = await getToken();
     if (!token) throw new Error("No auth token");
-    //return _sendNewUserApplication(token, app);
+    return _sendNewUserApplication(token, app);
+  };
+
+  const deleteUserApplication = async (id: number) => {
+    const token = await getToken();
+    if (!token) throw new Error("No auth token");
+    return _deleteUserApplication(token, id);
+  };
+  
+  const updateUserApplication = async (id: number, app: ToUpdateApplication) => {
+    const token = await getToken();
+    if (!token) throw new Error("No auth token");
+    return _updateUserApplication(token, id, app);
   };
 
   return {
     fetchUserApplications,
     sendNewUserApplication,
+    deleteUserApplication,
+    updateUserApplication,
   };
 }

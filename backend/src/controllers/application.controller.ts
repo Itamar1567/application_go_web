@@ -5,13 +5,15 @@ import {
   removeApplicationByUserId,
   retrieveAllApplicationsByUserId,
 } from "../services/applicaiton.service";
+import { getAuth } from "@clerk/express";
 
 export const createApplicationByUserId = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const userId = req.query.userId as string;
+
+    const { userId } = getAuth(req);
 
     if (!userId) {
       return res.status(400).json({ message: "userId is required" });
@@ -30,7 +32,8 @@ export const getAllApplicationsByUserId = async (
   res: Response
 ) => {
   try {
-    const userId = req.query.userId as string;
+
+    const { userId } = getAuth(req);
 
     if (!userId) {
       return res.status(400).json({ message: "userId is required" });
@@ -51,10 +54,10 @@ export const deleteApplicationByUserId = async (
   res: Response
 ) => {
   try {
-    const userId = req.query.userId as string;
+    
+    const { userId } = getAuth(req);
+    
     const id = Number(req.params.id);
-
-    console.log(userId); // comes back as number;
 
     if (Number.isNaN(id)) {
       return res.status(400).json({ error: "Invalid id" });
@@ -75,7 +78,7 @@ export const updateApplicationByUserId = async (
   req: Request,
   res: Response
 ) => {
-  const userId = req.query.userId as string;
+  const { userId } = getAuth(req);
   const id = Number(req.params.id);
 
   console.log(userId); // comes back as number;

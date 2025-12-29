@@ -6,10 +6,11 @@ import type {
 
 const applicationsUrl: string = "http://localhost:3000/api/applications";
 
-export const fetchUserApplications = async (token: string | null): Promise<ToGetApplication[]> => {
+export const fetchUserApplications = async (
+  token: string | null
+): Promise<ToGetApplication[]> => {
   try {
-
-    if(token === null){
+    if (token === null) {
       throw new Error("Invalid token");
     }
     const res = await fetch(applicationsUrl, {
@@ -32,13 +33,20 @@ export const fetchUserApplications = async (token: string | null): Promise<ToGet
 };
 
 export const sendNewUserApplication = async (
+  token: string,
   application: ToCreateApplication
 ): Promise<boolean> => {
   try {
-    const res = await fetch(applicationsUrl + "?userId=testuser_1", {
+    if (token === null) {
+      throw new Error("Invalid token");
+    }
+    const res = await fetch(applicationsUrl, {
       method: "POST",
       body: JSON.stringify(application),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!res.ok) {
@@ -54,10 +62,20 @@ export const sendNewUserApplication = async (
   }
 };
 
-export const deleteUserApplication = async (id: number): Promise<boolean> => {
+export const deleteUserApplication = async (
+  token: string,
+  id: number
+): Promise<boolean> => {
   try {
-    const res = await fetch(`${applicationsUrl}/${id}?userId=testuser_1`, {
+    if (token === null) {
+      throw new Error("Invalid token");
+    }
+    const res = await fetch(`${applicationsUrl}/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
     if (!res.ok) {
       const errorText = await res.text();
@@ -73,14 +91,21 @@ export const deleteUserApplication = async (id: number): Promise<boolean> => {
 };
 
 export const updateUserApplication = async (
+  token: string,
   id: number,
   updateApp: ToUpdateApplication
 ): Promise<boolean> => {
   try {
-    const res = await fetch(`${applicationsUrl}/${id}?userId=testuser_1`, {
+    if (token === null) {
+      throw new Error("Invalid token");
+    }
+    const res = await fetch(`${applicationsUrl}/${id}`, {
       method: "PATCH",
       body: JSON.stringify(updateApp),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!res.ok) {

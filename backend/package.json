@@ -25,6 +25,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@clerk/express": "^1.7.60",
     "cors": "^2.8.5",
     "mysql2": "^3.16.0"
   }
