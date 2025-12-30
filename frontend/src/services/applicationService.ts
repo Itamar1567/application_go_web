@@ -4,7 +4,7 @@ import type {
   ToUpdateApplication,
 } from "../interfaces/ToDoApplication";
 
-const applicationsUrl: string = "http://3.144.149.31/api/applications";
+const applicationsUrl: string = "/api/applications";
 
 export const fetchUserApplications = async (
   token: string | null

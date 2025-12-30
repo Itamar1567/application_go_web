@@ -11,7 +11,7 @@ const app = express();
 
 app.use(cors({
 
-    origin: "https://applicationgo.netlify.app",
+    origin: ["https://applicationgo.netlify.app", "http://localhost:5173"],
     credentials: true,
 }));
 
