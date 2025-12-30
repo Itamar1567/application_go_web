@@ -22,6 +22,7 @@ export const fetchUserApplications = async (
     }
 
     console.log("Succesfully fetched applications: ");
+    
     return res.json() as Promise<ToGetApplication[]>;
   } catch (err) {
     throw err;

@@ -5,7 +5,7 @@ import { useApplicationService } from "../hooks/useApplicationService";
 import { useEffect, useState } from "react";
 
 function Home() {
-  
+
   const { fetchUserApplications } = useApplicationService();
 
   const [applicationsData, setApplicationsData] = useState<ToGetApplication[]>(
@@ -73,7 +73,7 @@ function Home() {
         </div>
 
         <div className="applications-section">
-          {filteredData.map((application) => (
+          {Array.isArray(filteredData) && filteredData.map((application) => (
             <ApplicationModule
               key={application.id}
               {...application}

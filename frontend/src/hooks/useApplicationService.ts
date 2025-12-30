@@ -14,25 +14,25 @@ export function useApplicationService() {
   const fetchUserApplications = async () => {
     const token = await getToken();
     if (!token) throw new Error("No auth token");
-    return _fetchUserApplications(token);
+    return await _fetchUserApplications(token);
   };
 
   const sendNewUserApplication = async (app: ToCreateApplication) => {
     const token = await getToken();
     if (!token) throw new Error("No auth token");
-    return _sendNewUserApplication(token, app);
+    return await _sendNewUserApplication(token, app);
   };
 
   const deleteUserApplication = async (id: number) => {
     const token = await getToken();
     if (!token) throw new Error("No auth token");
-    return _deleteUserApplication(token, id);
+    return await _deleteUserApplication(token, id);
   };
   
   const updateUserApplication = async (id: number, app: ToUpdateApplication) => {
     const token = await getToken();
     if (!token) throw new Error("No auth token");
-    return _updateUserApplication(token, id, app);
+    return await _updateUserApplication(token, id, app);
   };
 
   return {
