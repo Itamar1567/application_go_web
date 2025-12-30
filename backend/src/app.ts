@@ -11,9 +11,10 @@ const app = express();
 
 app.use(cors({
 
-    origin: "http://localhost:5173",
+    origin: "https://applicationgo.netlify.app",
     credentials: true,
 }));
+
 app.use(limiter);
 //Attaches auth to the request from frontend
 app.use(clerkMiddleware());
