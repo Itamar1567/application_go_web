@@ -14,7 +14,7 @@ export const createApplicationByUserId = async (
   try {
     const { userId } = getAuth(req);
 
-    const result = await addApplicationByUserId(userId, req.body);
+    const result = await addApplicationByUserId(userId as string, req.body);
 
     return res.json({success: true, result, message: "Application Added To Cataloge"});
   } catch (err) {
@@ -30,7 +30,7 @@ export const getAllApplicationsByUserId = async (
   try {
     const { userId } = getAuth(req);
 
-    const applications = await retrieveAllApplicationsByUserId(userId);
+    const applications = await retrieveAllApplicationsByUserId(userId as string);
     return res.json(applications);
   } catch (err) {
     console.log(err);
@@ -52,7 +52,7 @@ export const deleteApplicationByUserId = async (
     if (Number.isNaN(id)) {
       return res.status(400).json({ error: "Invalid id" });
     }
-    const result = await removeApplicationByUserId(userId, id);
+    const result = await removeApplicationByUserId(userId as string, id);
     return res.json({ success: true, result, message: "Application succesfully deleted"});
   } catch (err) {
     console.log(err);
@@ -71,6 +71,6 @@ export const updateApplicationByUserId = async (
     return res.status(400).json({ error: "Invalid id" });
   }
 
-  const result = await changeApplicationByUserId(userId, id, req.body);
+  const result = await changeApplicationByUserId(userId as string, id, req.body);
   return res.json({ success: true, result, message: "Application Updated" });
 };
