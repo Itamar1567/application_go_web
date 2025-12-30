@@ -6,6 +6,29 @@ import type {
 
 const applicationsUrl: string = "/api/applications";
 
+//This is intended for development use only!
+// const applicationsUrlDev: string = "http://localhost:3000/api/applications";
+
+//Function to validate json response
+export async function validateResponse(res: Response) {
+
+  if (!res.ok) {
+
+    try {
+      const err = await res.json();
+      throw new Error(err.message || "Server responded with an error");
+    } catch {
+      throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    }
+  }
+
+  const ct = res.headers.get("content-type") || "";
+  if (!ct.includes("application/json")) {
+    throw new Error("Expected JSON, got something else (bad URL or server down");
+  }
+
+}
+
 export const fetchUserApplications = async (
   token: string | null
 ): Promise<ToGetApplication[]> => {
@@ -16,15 +39,12 @@ export const fetchUserApplications = async (
       },
     });
 
-    if (!res.ok) {
-      const error = await res.json();
-      throw new Error(error);
-    }
-
-    console.log("Succesfully fetched applications: ");
+    await validateResponse(res);
     
+
     return res.json() as Promise<ToGetApplication[]>;
   } catch (err) {
+    console.error("Failed fetching data");
     throw err;
   }
 };
@@ -43,13 +63,11 @@ export const sendNewUserApplication = async (
       },
     });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(errorText);
-    }
+    await validateResponse(res);
 
     return res.json();
   } catch (err) {
+    console.error("Failed to add data");
     throw err;
   }
 };
@@ -63,13 +81,12 @@ export const deleteUserApplication = async (token: string, id: number) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!res.ok) {
-      const error = await res.json();
-      throw new Error(error);
-    }
+
+    await validateResponse(res);
 
     return res.json();
   } catch (err) {
+    console.error("Failed to delete data");
     throw err;
   }
 };
@@ -89,13 +106,11 @@ export const updateUserApplication = async (
       },
     });
 
-    if (!res.ok) {
-      const error = await res.json();
-      throw new Error(error);
-    }
+    await validateResponse(res);
 
     return res.json();
   } catch (err) {
+    console.error("Failed to update data");
     throw err;
   }
 };

@@ -12,12 +12,28 @@ function Home() {
     []
   );
 
+  useEffect(() => {
+    const loadApplications = async () => {
+      try {
+        const data = await fetchUserApplications();
+        setApplicationsData(data);
+        setFilteredData(data);
+      } catch (err: any) {
+        alert(err.message);
+        setApplicationsData([]);
+        setFilteredData([]);
+      }
+    };
+
+    loadApplications();
+  }, []);
+
   //Search functionality
 
   const [searchItem, setSearchItem] = useState("");
 
   const [filteredData, setFilteredData] =
-    useState<ToGetApplication[]>(applicationsData);
+    useState<ToGetApplication[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let searchTerm: string = e.target.value;
@@ -35,20 +51,6 @@ function Home() {
 
   // End Search functionality
 
-  useEffect(() => {
-    const loadApplications = async () => {
-      try {
-        const data = await fetchUserApplications();
-        setApplicationsData(data);
-        setFilteredData(data);
-      } catch (err: any) {
-        alert(err.message);
-      }
-    };
-
-    loadApplications();
-  }, []);
-
   const handleDeleteApplication = (id: number) => {
     setApplicationsData((prev) =>
       prev.filter((application) => application.id !== id)
@@ -59,7 +61,7 @@ function Home() {
   };
 
   return (
-    <div>
+     <div>
       <title>Application Go</title>
       <div className="content">
         <div className="title-section">
@@ -72,6 +74,7 @@ function Home() {
           ></input>
         </div>
 
+        {filteredData.length > 0 ? (
         <div className="applications-section">
           {Array.isArray(filteredData) && filteredData.map((application) => (
             <ApplicationModule
@@ -81,7 +84,7 @@ function Home() {
               details={application}
             />
           ))}
-        </div>
+        </div>) : <p>No Applications to See Here</p>}
       </div>
     </div>
   );

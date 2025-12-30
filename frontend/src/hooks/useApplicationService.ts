@@ -12,8 +12,12 @@ export function useApplicationService() {
   const { getToken } = useAuth();
 
   const fetchUserApplications = async () => {
+            
+
     const token = await getToken();
+    
     if (!token) throw new Error("No auth token");
+    
     return await _fetchUserApplications(token);
   };
 
