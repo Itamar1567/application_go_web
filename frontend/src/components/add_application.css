@@ -18,13 +18,18 @@
   padding-right: 2rem;
 }
 
-.bottom-ul{
-    list-style: none;
-    padding: 0%;
+.bottom-ul {
+  list-style: none;
+  padding: 0%;
 }
 .submission-btn {
   border-radius: 9px;
   padding: 1rem 2rem;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-style: italic;
+  font-size: large;
+  color: black;
   transition: width 0.25s ease;
 }
 
@@ -42,17 +47,27 @@
   background-color: beige;
 }
 
+.extra-details {
+  width: 50%;
+}
+
 .solid {
   width: 100%;
   border-top: 3px solid #bbb;
 }
 
-input{
-    width: 100%;
+input {
+  width: 100%;
 }
 p {
   font-size: larger;
   align-items: center;
   display: flex;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media only screen and (max-width: 660px) {
+  .extra-details {
+    width: 100%;
+  }
 }

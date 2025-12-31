@@ -53,12 +53,12 @@ function AddApplication() {
 
   const typeEnum = [
     { text: "Full-Time", color: "#d7ff25ff" },
-    { text: "Part-Time", color: "#1c44f5ff" },
+    { text: "Part-Time", color: "#6a85ffff" },
     { text: "Internship", color: "#f34dddff" },
     { text: "Contract", color: "#00d3f8ff" },
   ];
   const locationEnum = [
-    { text: "OnSite", color: "#1519faff" },
+    { text: "OnSite", color: "#6f72ffff" },
     { text: "Hybrid", color: "#3dfd24ff" },
     { text: "Remote", color: "#f8be00ff" },
   ];
@@ -192,6 +192,7 @@ function AddApplication() {
       </ul>
       <hr className="solid"></hr>
       <h3>Extra Details</h3>
+      <div className="extra-details">
       <ul className="bottom-ul">
         <li>
           <p>Country: </p>
@@ -244,6 +245,7 @@ function AddApplication() {
           ></input>
         </li>
       </ul>
+      </div>
       <hr className="solid"></hr>
       <button className="add-application-btn" onClick={createApplication}>
         Create Application
