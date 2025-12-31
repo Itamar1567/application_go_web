@@ -15,6 +15,7 @@ app.use(cors({
     credentials: true,
 }));
 
+app.set("trust proxy", 1);
 app.use(limiter);
 //Attaches auth to the request from frontend
 app.use(clerkMiddleware());

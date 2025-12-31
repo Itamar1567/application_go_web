@@ -7,7 +7,9 @@ export const limiter = rateLimit({
   standardHeaders: "draft-8",
   legacyHeaders: false,
   ipv6Subnet: 56,
+  
   message: "Too many Request, please try again later",
+  
   handler: (req, res, next, options) => {
     return res.status(options.statusCode).json({
       success: false,
@@ -15,4 +17,5 @@ export const limiter = rateLimit({
       retryAfter: res.getHeader("Retry-After") || null, // optional
     });
   },
+  
 });
