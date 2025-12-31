@@ -7,7 +7,7 @@ import type {
 const applicationsUrl: string = "/api/applications";
 
 //This is intended for development use only!
-const applicationsUrlDev: string = "http://localhost:3000/api/applications";
+// const applicationsUrlDev: string = "http://localhost:3000/api/applications";
 
 //Function to validate json response
 export async function validateResponse(res: Response) {
@@ -33,7 +33,7 @@ export const fetchUserApplications = async (
   token: string | null
 ): Promise<ToGetApplication[]> => {
   try {
-    const res = await fetch(applicationsUrlDev, {
+    const res = await fetch(applicationsUrl, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
